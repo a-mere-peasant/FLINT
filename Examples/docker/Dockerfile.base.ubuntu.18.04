@@ -1,23 +1,20 @@
 # ==================================================================================================================
 #
-# Docker to ubuntu 18.04 base image (for required libraries) used by flint docker
+# Docker to fedora base image (for required libraries) used by flint docker
 #
 # Building this Docker: 
-#   docker build -f Dockerfile.base.ubuntu.18.04 --build-arg NUM_CPU=4 -t moja/baseimage:ubuntu-18.04 .
+#   docker build -f Dockerfile.bfedora --build-arg NUM_CPU=4 -t moja/baseimage:fedora31 .
 #
 # ==================================================================================================================
 
-# Ubuntu 18.04 Bionic Beaver
-FROM ubuntu:bionic
+FROM fedora
 
 LABEL maintainer="info@moja.global"
-
-ARG DEBIAN_FRONTEND=noninteractive
 
 WORKDIR $ROOTDIR/
 
 # Install basic dependencies
-RUN apt-get update -y && apt-get install -y \
+RUN dnf install -y \
     software-properties-common \
     build-essential \
     python3-dev \
@@ -43,7 +40,7 @@ RUN apt-get update -y && apt-get install -y \
     postgresql-client-10 \
 	git \
     gdb \
-    && apt-get -y autoremove \
+    && dnf autoremove \
 	&& 	apt-get clean \
 	&& ln -sf /usr/include/eigen3 /usr/local/include/eigen
 
