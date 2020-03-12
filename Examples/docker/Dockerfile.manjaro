@@ -43,8 +43,6 @@ RUN pacman -S -y \
     postgresql-client-10 \
 	git \
     gdb \
-    && apt-get -y autoremove \
-	&& 	apt-get clean \
 	&& ln -sf /usr/include/eigen3 /usr/local/include/eigen
 
 # set versions of libraries used and some paths
