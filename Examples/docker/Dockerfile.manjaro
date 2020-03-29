@@ -12,12 +12,10 @@ FROM ubuntu:bionic
 
 LABEL maintainer="info@moja.global"
 
-ARG DEBIAN_FRONTEND=noninteractive
-
 WORKDIR $ROOTDIR/
 
 # Install basic dependencies
-RUN pacman -S -y \
+RUN pamac install \
     software-properties-common \
     build-essential \
     python3-dev \
@@ -121,8 +119,8 @@ RUN cd src && tar -xvf gdal-${GDAL_VERSION}.tar.gz && cd gdal-${GDAL_VERSION} \
         --with-netcdf --with-hdf5=/usr/lib/x86_64-linux-gnu/hdf5/serial \
 		--with-curl \
     && make -j $NUM_CPU && make install && ldconfig \
-    && apt-get update -y \
-    && apt-get remove -y --purge build-essential \
+    && pamac update \
+    && pamac remove --purge build-essential \
     && cd $ROOTDIR && cd src/gdal-${GDAL_VERSION}/swig/python \
     && python3 setup.py build \
     && python3 setup.py install \
